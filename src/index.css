@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Ethereal Desktop 设计系统 - 清新自然风格 (亮色模式) */
+    /* 鼠尾草绿主题，源自 Stitch design.md */
+    --background: 240 33% 98%;
+    --foreground: 210 7% 11%;
+
+    --surface: 240 33% 98%;
+    --surface-dim: 240 3% 86%;
+    --surface-bright: 240 33% 98%;
+    --surface-container-lowest: 0 0% 100%;
+    --surface-container-low: 240 14% 96%;
+    --surface-container: 240 6% 94%;
+    --surface-container-high: 240 5% 91%;
+    --surface-container-highest: 240 5% 89%;
+    --surface-tint: 149 20% 33%;
+    --surface-variant: 240 5% 89%;
+
+    --on-surface: 210 7% 11%;
+    --on-surface-variant: 146 5% 27%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 7% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 7% 11%;
+
+    --primary: 150 21% 32%;
+    --primary-foreground: 0 0% 100%;
+    --primary-container: 148 16% 42%;
+    --on-primary-container: 132 100% 98%;
+
+    --secondary: 164 16% 34%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-container: 162 41% 85%;
+    --on-secondary-container: 164 15% 36%;
+
+    --tertiary: 210 11% 36%;
+    --tertiary-foreground: 0 0% 100%;
+    --tertiary-container: 210 8% 46%;
+    --on-tertiary-container: 240 100% 99%;
+
+    --muted: 240 6% 94%;
+    --muted-foreground: 146 5% 27%;
+
+    --accent: 162 41% 85%;
+    --accent-foreground: 164 15% 36%;
+
+    --destructive: 0 75% 42%;
+    --destructive-foreground: 0 0% 100%;
+    --error-container: 6 100% 92%;
+    --on-error-container: 356 100% 29%;
+
+    --border: 129 6% 77%;
+    --input: 129 6% 77%;
+    --ring: 150 21% 32%;
+
+    --outline: 129 3% 46%;
+    --outline-variant: 129 6% 77%;
+
+    --inverse-surface: 210 4% 19%;
+    --inverse-on-surface: 240 11% 95%;
+    --inverse-primary: 146 28% 74%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Ethereal Desktop 设计系统 - 清新自然风格 (暗色模式) */
+    --background: 210 7% 11%;
+    --foreground: 240 5% 89%;
+
+    --surface: 210 7% 11%;
+    --surface-dim: 210 7% 11%;
+    --surface-bright: 150 3% 24%;
+    --surface-container-lowest: 200 7% 9%;
+    --surface-container-low: 195 6% 12%;
+    --surface-container: 180 4% 14%;
+    --surface-container-high: 180 3% 18%;
+    --surface-container-highest: 180 3% 22%;
+    --surface-tint: 146 28% 74%;
+    --surface-variant: 146 5% 27%;
+
+    --on-surface: 240 5% 89%;
+    --on-surface-variant: 129 6% 77%;
+
+    --card: 180 4% 14%;
+    --card-foreground: 240 5% 89%;
+
+    --popover: 180 4% 14%;
+    --popover-foreground: 240 5% 89%;
+
+    --primary: 146 28% 74%;
+    --primary-foreground: 151 61% 8%;
+    --primary-container: 151 27% 24%;
+    --on-primary-container: 144 48% 85%;
+
+    --secondary: 164 23% 75%;
+    --secondary-foreground: 168 32% 12%;
+    --secondary-container: 167 22% 25%;
+    --on-secondary-container: 162 41% 85%;
+
+    --tertiary: 210 20% 78%;
+    --tertiary-foreground: 205 25% 15%;
+    --tertiary-container: 208 13% 28%;
+    --on-tertiary-container: 211 40% 90%;
+
+    --muted: 146 5% 27%;
+    --muted-foreground: 129 6% 77%;
+
+    --accent: 167 22% 25%;
+    --accent-foreground: 162 41% 85%;
+
+    --destructive: 6 100% 84%;
+    --destructive-foreground: 357 100% 21%;
+    --error-container: 356 100% 29%;
+    --on-error-container: 6 100% 92%;
+
+    --border: 146 5% 27%;
+    --input: 146 5% 27%;
+    --ring: 146 28% 74%;
+
+    --outline: 128 4% 56%;
+    --outline-variant: 146 5% 27%;
+
+    --inverse-surface: 240 5% 89%;
+    --inverse-on-surface: 210 4% 19%;
+    --inverse-primary: 150 21% 32%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'opsz' 32;
+  }
+
+  /* macOS 风格滚动条 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-outline-variant/40;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-outline-variant/70;
+  }
+
+  /* 玻璃拟态效果 - Ethereal Desktop 强调的玻璃质感 */
+  .glass {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  .glass-strong {
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+  }
+}
