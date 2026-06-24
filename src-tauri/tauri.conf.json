@@ -25,6 +25,8 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "externalBin": ["binaries/node"],
+    "resources": ["../sidecar/node_modules/@earendil-works/pi-coding-agent/dist/**/*"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

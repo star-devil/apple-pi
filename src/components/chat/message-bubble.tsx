@@ -1,14 +1,5 @@
-import { Bot, ThumbsUp, ThumbsDown, RefreshCw } from 'lucide-react';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Markdown } from './markdown';
-
-export interface ChatMessage {
-  id: string;
-  role: 'user' | 'agent';
-  content: string;
-  timestamp: string;
-}
+import { cn } from '@/lib/utils';
+import type { ChatMessage } from '@/lib/types';
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -17,46 +8,36 @@ interface MessageBubbleProps {
 export function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user';
 
-  if (isUser) {
-    return (
-      <div className="flex justify-end px-window-padding">
-        <div className="flex max-w-[80%] flex-col items-end gap-1">
-          <div className="rounded-2xl rounded-br-md bg-[hsl(var(--tag-tint-2))] px-4 py-3 text-body text-[hsl(var(--ink-blue))] shadow-ring-soft">
-            <p className="leading-relaxed">{message.content}</p>
-          </div>
-          <span className="px-1 text-label-sm text-stone">{message.timestamp}</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="group flex gap-3 px-window-padding">
-      <Avatar className="h-8 w-8 shrink-0">
-        <AvatarFallback className="bg-[hsl(var(--tag-tint-1))] text-[hsl(var(--ink-blue))] shadow-ring-soft">
-          <Bot className="h-4 w-4" strokeWidth={2} />
-        </AvatarFallback>
-      </Avatar>
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <div className="flex items-center gap-2">
-          <span className="font-serif-title text-item font-medium text-[hsl(var(--olive))]">智能体</span>
-          <span className="text-label-sm text-stone">{message.timestamp}</span>
+    <div className={cn('flex w-full', isUser ? 'justify-end' : 'justify-start')}>
+      <div
+        className={cn(
+          'max-w-[80%] rounded-2xl px-4 py-3 text-body-md',
+          isUser
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-surface-container text-on-surface'
+        )}
+      >
+        {message.thinking && (
+          <details className="mb-2 rounded-lg bg-surface-container-high/50 p-2 text-label-sm text-muted-foreground">
+            <summary className="cursor-pointer select-none">思考过程</summary>
+            <pre className="mt-1 whitespace-pre-wrap font-mono text-label-sm">
+              {message.thinking}
+            </pre>
+          </details>
+        )}
+        <div className="whitespace-pre-wrap break-words">
+          {message.text || (message.streaming ? '…' : '')}
         </div>
-        <div className="rounded-2xl rounded-tl-md bg-[hsl(var(--surface-container-lowest))] px-4 py-3 shadow-whisper-warm">
-          <Markdown content={message.content} />
-        </div>
-        {/* 操作按钮 */}
-        <div className="flex items-center gap-1 pt-0.5 opacity-60 transition-opacity group-hover:opacity-100">
-          <Button variant="ghost" size="icon" className="h-7 w-7 hover:text-ink-blue" title="点赞">
-            <ThumbsUp className="h-3.5 w-3.5" strokeWidth={2} />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7 hover:text-destructive" title="点踩">
-            <ThumbsDown className="h-3.5 w-3.5" strokeWidth={2} />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-7 w-7 hover:text-ink-blue" title="重新生成">
-            <RefreshCw className="h-3.5 w-3.5" strokeWidth={2} />
-          </Button>
-        </div>
+        {message.toolCalls && message.toolCalls.length > 0 && (
+          <div className="mt-2 space-y-1 border-t border-outline-variant/30 pt-2">
+            {message.toolCalls.map((tc) => (
+              <div key={tc.id} className="text-label-sm text-muted-foreground">
+                🔧 {tc.name}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
