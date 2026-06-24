@@ -37,6 +37,14 @@ The agent runs via the [Pi Coding Agent](https://github.com/earendil-works/pi) C
 - **Node binary**: fetched by `pnpm fetch:node` into `src-tauri/binaries/` (gitignored). Naming follows Tauri externalBin convention (`node-aarch64-apple-darwin`, etc.).
 - **No MCP built-in**: Pi's philosophy uses Skills instead. MCP support requires a Pi extension or SDK-level integration (v2+).
 
+## Packaging (production build)
+
+- **sidecar deps must be real files, not pnpm symlinks**: before `pnpm tauri build`, run `npm install --production` in `sidecar/` (NOT `pnpm install`) to produce a flat, symlink-free `node_modules/`. pnpm's symlinked store breaks Tauri's resource bundling.
+- **Bundled resources**: `tauri.conf.json` `resources: ["../sidecar/node_modules/**/*"]` copies the entire tree. Because the glob starts with `../`, Tauri preserves it as `_up_/` in the bundle, so files land at `<resource_dir>/_up_/sidecar/node_modules/...`. `resolve_pi_entry()` in `sidecar.rs` accounts for this.
+- **Node resolution still works**: pi's `dist/cli.js` resolves transitive deps (chalk, pi-ai, undici, ...) from `pi-coding-agent/node_modules/` (npm nests them there), which Node's ESM resolver finds by walking up from `dist/`.
+- **Bundle size**: ~63 MB `.dmg` (node binary ~114 MB uncompressed + pi deps ~164 MB uncompressed, compressed in dmg). Acceptable per implementation-plan estimate.
+- **Config files** (`auth.json`/`settings.json`) are NOT bundled — they live in `<app_data_dir>/apple-pi/.pi/agent/` and are created on first save via `config.rs`.
+
 ## Gotchas
 
 - **Fixed dev port 1420** (`vite.config.ts` `strictPort: true`). Tauri expects this URL; do not change it without updating `tauri.conf.json` `devUrl`.

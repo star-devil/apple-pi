@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::process::{Child, ChildStdin};
 use tokio::sync::{Mutex, oneshot};
-use tauri::{AppHandle, Emitter};
+use tauri::{AppHandle, Emitter, Manager};
 use std::collections::HashMap;
 use serde_json::Value;
 
@@ -36,7 +36,7 @@ impl PiSidecar {
         }
 
         let node_bin = resolve_node_bin()?;
-        let pi_entry = resolve_pi_entry()?;
+        let pi_entry = resolve_pi_entry(&app)?;
         let pi_dir = resolve_pi_dir(&app)?;
 
         // Ensure isolated pi data dir exists
@@ -261,13 +261,29 @@ fn current_target_triple() -> &'static str {
 
 /// Resolve the pi-coding-agent CLI entry (dist/cli.js).
 /// Looks under sidecar/node_modules (dev) or bundled resources (prod).
-fn resolve_pi_entry() -> Result<PathBuf, String> {
+fn resolve_pi_entry(app: &AppHandle) -> Result<PathBuf, String> {
     let candidates = [
         // Dev: <workspace>/sidecar/node_modules/@earendil-works/pi-coding-agent/dist/cli.js
         {
             let manifest = env!("CARGO_MANIFEST_DIR");
             PathBuf::from(manifest)
                 .join("..")
+                .join("sidecar")
+                .join("node_modules")
+                .join("@earendil-works")
+                .join("pi-coding-agent")
+                .join("dist")
+                .join("cli.js")
+        },
+        // Bundled: <resource_dir>/_up_/sidecar/node_modules/@earendil-works/pi-coding-agent/dist/cli.js
+        // (Tauri preserves the "../" prefix from the resources glob as "_up_".)
+        {
+            let resource_dir = app
+                .path()
+                .resource_dir()
+                .map_err(|e| format!("resource_dir: {e}"))?;
+            resource_dir
+                .join("_up_")
                 .join("sidecar")
                 .join("node_modules")
                 .join("@earendil-works")
