@@ -39,23 +39,23 @@ export function Sidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <aside className="flex h-full w-sidebar-width shrink-0 flex-col border-r border-outline-variant/40 bg-surface-container-low/60 glass">
+    <aside className="flex h-full w-sidebar-width shrink-0 flex-col border-r border-outline-variant/40 bg-ivory/70 glass">
       {/* 品牌区 */}
       <div className="flex items-center gap-3 px-window-padding pt-window-padding pb-md">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-container">
-          <Bot className="h-5 w-5 text-on-primary-container" strokeWidth={2} />
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink-blue">
+          <Bot className="h-5 w-5 text-ivory" strokeWidth={2} />
         </div>
         <div className="flex flex-col">
-          <span className="text-body-md font-semibold text-on-surface">ChatShell</span>
-          <span className="text-label-sm text-muted-foreground">DeepSeek v3</span>
+          <span className="font-serif-title text-item font-medium text-on-surface">ChatShell</span>
+          <span className="text-label-sm text-olive">DeepSeek v3</span>
         </div>
       </div>
 
       {/* 状态徽章 */}
       <div className="px-window-padding pb-md">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-secondary-container/60 px-2.5 py-1">
-          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          <span className="text-label-sm font-medium text-on-secondary-container">专业智能体已激活</span>
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-tag-tint-2 px-2.5 py-1">
+          <span className="h-1.5 w-1.5 rounded-full bg-ink-blue" />
+          <span className="text-label-sm font-medium text-ink-blue">专业智能体已激活</span>
         </div>
       </div>
 
@@ -77,14 +77,14 @@ export function Sidebar() {
               key={item.to}
               to={item.to}
               className={cn(
-                'group relative flex items-center gap-3 rounded-lg px-3 py-2 text-body-md transition-colors',
+                'group relative flex items-center gap-3 rounded-lg px-3 py-2 text-body transition-colors',
                 isActive
-                  ? 'bg-secondary-container/70 font-medium text-on-surface'
-                  : 'text-on-surface-variant hover:bg-accent/50 hover:text-on-surface'
+                  ? 'bg-warm-sand/70 font-medium text-on-surface'
+                  : 'text-stone hover:bg-warm-sand/40 hover:text-on-surface'
               )}
             >
               {isActive && (
-                <span className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-primary" />
+                <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-full bg-ink-blue" />
               )}
               <Icon className="h-4 w-4 shrink-0" strokeWidth={2} />
               <span>{item.label}</span>
@@ -96,8 +96,8 @@ export function Sidebar() {
       {/* 历史记录区 */}
       <div className="mt-lg flex-1 overflow-hidden px-md">
         <div className="flex items-center gap-2 px-3 pb-sm">
-          <History className="h-3.5 w-3.5 text-muted-foreground" strokeWidth={2} />
-          <span className="text-label-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          <History className="h-3.5 w-3.5 text-stone" strokeWidth={2} />
+          <span className="text-label-sm font-semibold uppercase tracking-wider text-stone">
             历史记录
           </span>
         </div>
@@ -105,7 +105,7 @@ export function Sidebar() {
           {recentConversations.map((conv) => (
             <button
               key={conv}
-              className="flex items-center rounded-lg px-3 py-1.5 text-body-md text-on-surface-variant transition-colors hover:bg-accent/50 hover:text-on-surface"
+              className="flex items-center rounded-lg px-3 py-1.5 text-body text-stone transition-colors hover:bg-warm-sand/40 hover:text-on-surface"
             >
               <span className="truncate">{conv}</span>
             </button>
@@ -118,7 +118,7 @@ export function Sidebar() {
       {/* 底部账户区 */}
       <div className="flex items-center gap-3 px-window-padding py-md">
         <Avatar className="h-8 w-8">
-          <AvatarFallback className="bg-secondary-container text-label-sm">AR</AvatarFallback>
+          <AvatarFallback className="bg-warm-sand text-label-sm text-on-surface">AR</AvatarFallback>
         </Avatar>
         <div className="flex flex-1 flex-col">
           <span className="text-label-md font-medium text-on-surface">Alex Rivera</span>

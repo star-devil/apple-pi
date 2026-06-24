@@ -9,12 +9,12 @@ interface TopBarProps {
 
 export function TopBar({ breadcrumb }: TopBarProps) {
   return (
-    <header className="flex h-14 shrink-0 items-center gap-md border-b border-outline-variant/40 bg-surface/60 px-window-padding glass">
+    <header className="flex h-14 shrink-0 items-center gap-md border-b border-outline-variant/40 bg-ivory/70 px-window-padding glass">
       {/* 面包屑 */}
       {breadcrumb && (
-        <div className="flex items-center gap-2 text-body-md">
-          <span className="text-muted-foreground">ChatShell</span>
-          <span className="text-muted-foreground">/</span>
+        <div className="flex items-center gap-2 text-body">
+          <span className="text-stone">ChatShell</span>
+          <span className="text-stone">/</span>
           <span className="font-medium text-on-surface">{breadcrumb}</span>
         </div>
       )}

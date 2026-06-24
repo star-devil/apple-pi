@@ -4,132 +4,160 @@
 
 @layer base {
   :root {
-    /* Ethereal Desktop 设计系统 - 清新自然风格 (亮色模式) */
-    /* 鼠尾草绿主题，源自 Stitch design.md */
-    --background: 240 33% 98%;
-    --foreground: 210 7% 11%;
+    /* Kami 设计系统 · 亮色模式 */
+    /* 暖米纸底，油墨蓝点缀，serif 承担层级 */
+    --background: 53 29% 95%;
+    --foreground: 60 3% 8%;
 
-    --surface: 240 33% 98%;
-    --surface-dim: 240 3% 86%;
-    --surface-bright: 240 33% 98%;
-    --surface-container-lowest: 0 0% 100%;
-    --surface-container-low: 240 14% 96%;
-    --surface-container: 240 6% 94%;
-    --surface-container-high: 240 5% 91%;
-    --surface-container-highest: 240 5% 89%;
-    --surface-tint: 149 20% 33%;
-    --surface-variant: 240 5% 89%;
+    /* 画布层 · Canvas */
+    --surface: 48 33% 97%;
+    --surface-dim: 50 21% 89%;
+    --surface-bright: 48 33% 97%;
+    --surface-container-lowest: 48 33% 99%;
+    --surface-container-low: 50 21% 92%;
+    --surface-container: 50 21% 89%;
+    --surface-container-high: 50 18% 85%;
+    --surface-container-highest: 50 15% 80%;
+    --surface-tint: 215 55% 24%;
+    --surface-variant: 50 15% 80%;
 
-    --on-surface: 210 7% 11%;
-    --on-surface-variant: 146 5% 27%;
+    --on-surface: 60 3% 8%;
+    --on-surface-variant: 43 5% 30%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 7% 11%;
+    --card: 48 33% 97%;
+    --card-foreground: 60 3% 8%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 7% 11%;
+    --popover: 48 33% 97%;
+    --popover-foreground: 60 3% 8%;
 
-    --primary: 150 21% 32%;
-    --primary-foreground: 0 0% 100%;
-    --primary-container: 148 16% 42%;
-    --on-primary-container: 132 100% 98%;
+    /* 主调 · Brand - 油墨蓝唯一强调色 */
+    --primary: 215 55% 24%;
+    --primary-foreground: 48 33% 97%;
+    --primary-container: 211 51% 36%;
+    --on-primary-container: 48 33% 99%;
 
-    --secondary: 164 16% 34%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-container: 162 41% 85%;
-    --on-secondary-container: 164 15% 36%;
+    --secondary: 51 3% 41%;
+    --secondary-foreground: 48 33% 97%;
+    --secondary-container: 50 21% 89%;
+    --on-secondary-container: 60 3% 23%;
 
-    --tertiary: 210 11% 36%;
-    --tertiary-foreground: 0 0% 100%;
-    --tertiary-container: 210 8% 46%;
-    --on-tertiary-container: 240 100% 99%;
+    --tertiary: 43 5% 30%;
+    --tertiary-foreground: 48 33% 97%;
+    --tertiary-container: 51 3% 41%;
+    --on-tertiary-container: 50 21% 92%;
 
-    --muted: 240 6% 94%;
-    --muted-foreground: 146 5% 27%;
+    --muted: 50 21% 92%;
+    --muted-foreground: 51 3% 41%;
 
-    --accent: 162 41% 85%;
-    --accent-foreground: 164 15% 36%;
+    --accent: 212 46% 93%;
+    --accent-foreground: 215 55% 24%;
 
-    --destructive: 0 75% 42%;
-    --destructive-foreground: 0 0% 100%;
-    --error-container: 6 100% 92%;
-    --on-error-container: 356 100% 29%;
+    --destructive: 0 56% 45%;
+    --destructive-foreground: 48 33% 97%;
+    --error-container: 0 40% 92%;
+    --on-error-container: 0 60% 25%;
 
-    --border: 129 6% 77%;
-    --input: 129 6% 77%;
-    --ring: 150 21% 32%;
+    --border: 50 18% 85%;
+    --input: 50 18% 85%;
+    --ring: 215 55% 24%;
 
-    --outline: 129 3% 46%;
-    --outline-variant: 129 6% 77%;
+    --outline: 51 3% 41%;
+    --outline-variant: 50 18% 85%;
 
-    --inverse-surface: 210 4% 19%;
-    --inverse-on-surface: 240 11% 95%;
-    --inverse-primary: 146 28% 74%;
+    --inverse-surface: 60 2% 18%;
+    --inverse-on-surface: 48 33% 95%;
+    --inverse-primary: 211 51% 36%;
 
-    --radius: 0.5rem;
+    /* Kami 专用变量 */
+    --parchment: 53 29% 95%;
+    --ivory: 48 33% 97%;
+    --warm-sand: 50 21% 89%;
+    --ink-blue: 215 55% 24%;
+    --olive: 43 5% 30%;
+    --stone: 51 3% 41%;
+    --ring-warm: 50 21% 80%;
+
+    /* Tag 实色（替代 rgba，避免双层矩形） */
+    --tag-tint-1: 213 36% 95%;
+    --tag-tint-2: 212 46% 93%;
+    --tag-tint-3: 211 36% 86%;
+
+    --radius: 0.375rem;
   }
 
   .dark {
-    /* Ethereal Desktop 设计系统 - 清新自然风格 (暗色模式) */
-    --background: 210 7% 11%;
-    --foreground: 240 5% 89%;
+    /* Kami 设计系统 · 暗色模式 */
+    --background: 60 3% 8%;
+    --foreground: 53 29% 95%;
 
-    --surface: 210 7% 11%;
-    --surface-dim: 210 7% 11%;
-    --surface-bright: 150 3% 24%;
-    --surface-container-lowest: 200 7% 9%;
-    --surface-container-low: 195 6% 12%;
-    --surface-container: 180 4% 14%;
-    --surface-container-high: 180 3% 18%;
-    --surface-container-highest: 180 3% 22%;
-    --surface-tint: 146 28% 74%;
-    --surface-variant: 146 5% 27%;
+    --surface: 40 5% 11%;
+    --surface-dim: 60 3% 8%;
+    --surface-bright: 40 5% 14%;
+    --surface-container-lowest: 60 3% 6%;
+    --surface-container-low: 40 5% 10%;
+    --surface-container: 40 4% 14%;
+    --surface-container-high: 40 4% 18%;
+    --surface-container-highest: 40 4% 22%;
+    --surface-tint: 211 51% 36%;
+    --surface-variant: 40 4% 22%;
 
-    --on-surface: 240 5% 89%;
-    --on-surface-variant: 129 6% 77%;
+    --on-surface: 53 29% 95%;
+    --on-surface-variant: 48 5% 64%;
 
-    --card: 180 4% 14%;
-    --card-foreground: 240 5% 89%;
+    --card: 40 4% 14%;
+    --card-foreground: 53 29% 95%;
 
-    --popover: 180 4% 14%;
-    --popover-foreground: 240 5% 89%;
+    --popover: 40 4% 14%;
+    --popover-foreground: 53 29% 95%;
 
-    --primary: 146 28% 74%;
-    --primary-foreground: 151 61% 8%;
-    --primary-container: 151 27% 24%;
-    --on-primary-container: 144 48% 85%;
+    --primary: 211 51% 36%;
+    --primary-foreground: 48 33% 97%;
+    --primary-container: 215 55% 24%;
+    --on-primary-container: 212 46% 93%;
 
-    --secondary: 164 23% 75%;
-    --secondary-foreground: 168 32% 12%;
-    --secondary-container: 167 22% 25%;
-    --on-secondary-container: 162 41% 85%;
+    --secondary: 49 12% 83%;
+    --secondary-foreground: 60 3% 8%;
+    --secondary-container: 60 3% 23%;
+    --on-secondary-container: 49 12% 83%;
 
-    --tertiary: 210 20% 78%;
-    --tertiary-foreground: 205 25% 15%;
-    --tertiary-container: 208 13% 28%;
-    --on-tertiary-container: 211 40% 90%;
+    --tertiary: 48 5% 64%;
+    --tertiary-foreground: 40 5% 11%;
+    --tertiary-container: 51 3% 41%;
+    --on-tertiary-container: 48 5% 90%;
 
-    --muted: 146 5% 27%;
-    --muted-foreground: 129 6% 77%;
+    --muted: 40 4% 22%;
+    --muted-foreground: 48 5% 64%;
 
-    --accent: 167 22% 25%;
-    --accent-foreground: 162 41% 85%;
+    --accent: 216 28% 27%;
+    --accent-foreground: 212 46% 93%;
 
-    --destructive: 6 100% 84%;
-    --destructive-foreground: 357 100% 21%;
-    --error-container: 356 100% 29%;
-    --on-error-container: 6 100% 92%;
+    --destructive: 0 60% 62%;
+    --destructive-foreground: 60 3% 8%;
+    --error-container: 0 50% 25%;
+    --on-error-container: 0 40% 92%;
 
-    --border: 146 5% 27%;
-    --input: 146 5% 27%;
-    --ring: 146 28% 74%;
+    --border: 40 4% 22%;
+    --input: 40 4% 22%;
+    --ring: 211 51% 36%;
 
-    --outline: 128 4% 56%;
-    --outline-variant: 146 5% 27%;
+    --outline: 53 4% 53%;
+    --outline-variant: 40 4% 22%;
 
-    --inverse-surface: 240 5% 89%;
-    --inverse-on-surface: 210 4% 19%;
-    --inverse-primary: 150 21% 32%;
+    --inverse-surface: 53 29% 95%;
+    --inverse-on-surface: 60 3% 8%;
+    --inverse-primary: 215 55% 24%;
+
+    --parchment: 60 3% 8%;
+    --ivory: 40 4% 14%;
+    --warm-sand: 60 3% 23%;
+    --ink-blue: 211 51% 36%;
+    --olive: 48 5% 64%;
+    --stone: 53 4% 53%;
+    --ring-warm: 40 4% 30%;
+
+    --tag-tint-1: 215 21% 21%;
+    --tag-tint-2: 216 28% 27%;
+    --tag-tint-3: 216 30% 33%;
   }
 }
 
@@ -146,11 +174,11 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: 'cv11', 'ss01';
-    font-variation-settings: 'opsz' 32;
+    /* Kami: 中文标题用 serif，正文用 sans */
+    font-feature-settings: 'kern', 'liga', 'tnum';
   }
 
-  /* macOS 风格滚动条 */
+  /* macOS 风格滚动条 - 暖色调 */
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -161,22 +189,54 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-outline-variant/40;
+    @apply bg-outline-variant/50;
     border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-outline-variant/70;
+    @apply bg-outline-variant/80;
   }
 
-  /* 玻璃拟态效果 - Ethereal Desktop 强调的玻璃质感 */
+  /* Kami 阴影系统：ring shadow 替代硬投影 */
+  .shadow-ring {
+    box-shadow: 0 0 0 1px hsl(var(--ring-warm));
+  }
+
+  .shadow-whisper {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  /* 玻璃拟态效果 */
   .glass {
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
   }
 
   .glass-strong {
-    backdrop-filter: blur(32px) saturate(180%);
-    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    backdrop-filter: blur(32px) saturate(160%);
+    -webkit-backdrop-filter: blur(32px) saturate(160%);
+  }
+
+  /* Serif 标题 - 承担层级权威 */
+  .font-serif-title {
+    font-family: 'Charter', 'Source Han Serif SC', 'Noto Serif SC', Georgia, 'Times New Roman', serif;
+    font-feature-settings: 'kern', 'liga';
+  }
+
+  /* Dash list - 短横线代替圆点，更书卷气 */
+  .list-dash {
+    list-style: none;
+    padding-left: 1.25rem;
+  }
+
+  .list-dash > li {
+    position: relative;
+  }
+
+  .list-dash > li::before {
+    content: '—';
+    position: absolute;
+    left: -1.25rem;
+    color: hsl(var(--olive));
   }
 }

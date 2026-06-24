@@ -71,29 +71,50 @@ export default {
           variant: 'hsl(var(--outline-variant))'
         },
         'error-container': 'hsl(var(--error-container))',
-        'on-error-container': 'hsl(var(--on-error-container))'
+        'on-error-container': 'hsl(var(--on-error-container))',
+        // Kami 专用色
+        parchment: 'hsl(var(--parchment))',
+        ivory: 'hsl(var(--ivory))',
+        'warm-sand': 'hsl(var(--warm-sand))',
+        'ink-blue': 'hsl(var(--ink-blue))',
+        olive: 'hsl(var(--olive))',
+        stone: 'hsl(var(--stone))'
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 0.125rem)',
-        sm: 'calc(var(--radius) - 0.25rem)',
-        xl: 'calc(var(--radius) + 0.5rem)',
-        '2xl': 'calc(var(--radius) + 0.75rem)'
+        // Kami 圆角尺度
+        none: '0px',
+        tight: '4px',
+        code: '6px',
+        DEFAULT: 'var(--radius)',
+        md: 'calc(var(--radius) + 0.125rem)',
+        lg: '8px',
+        xl: '12px',
+        '2xl': '16px',
+        '3xl': '24px',
+        '4xl': '32px'
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        // Kami: serif 承担层级，sans 承担功能，mono 代码
+        serif: ['Charter', 'Source Han Serif SC', 'Noto Serif SC', 'Georgia', 'serif'],
+        sans: ['Inter', 'PingFang SC', 'Noto Sans SC', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'monospace']
       },
       fontSize: {
-        'display-lg': ['48px', { lineHeight: '1.1', fontWeight: '600', letterSpacing: '-0.02em' }],
-        'headline-lg': ['32px', { lineHeight: '1.2', fontWeight: '600', letterSpacing: '-0.01em' }],
-        'headline-md': ['24px', { lineHeight: '1.3', fontWeight: '500', letterSpacing: '0' }],
-        'body-lg': ['18px', { lineHeight: '1.6', fontWeight: '400', letterSpacing: '0.01em' }],
-        'body-md': ['15px', { lineHeight: '1.5', fontWeight: '400', letterSpacing: '0.01em' }],
-        'label-md': ['13px', { lineHeight: '1.4', fontWeight: '500', letterSpacing: '0.03em' }],
-        'label-sm': ['11px', { lineHeight: '1.4', fontWeight: '600', letterSpacing: '0.05em' }]
+        // Kami 层级 · 印刷 PT × 1.33 ≈ 屏幕 PX
+        'display': ['48px', { lineHeight: '1.1', fontWeight: '500', letterSpacing: '-0.02em' }],
+        'display-sm': ['36px', { lineHeight: '1.15', fontWeight: '500', letterSpacing: '-0.01em' }],
+        'section': ['24px', { lineHeight: '1.2', fontWeight: '500', letterSpacing: '0' }],
+        'subsection': ['18px', { lineHeight: '1.25', fontWeight: '500', letterSpacing: '0' }],
+        'item': ['15px', { lineHeight: '1.3', fontWeight: '500', letterSpacing: '0' }],
+        'body-lg': ['18px', { lineHeight: '1.55', fontWeight: '400' }],
+        'body': ['15px', { lineHeight: '1.55', fontWeight: '400' }],
+        'body-dense': ['13px', { lineHeight: '1.4', fontWeight: '400' }],
+        'caption': ['13px', { lineHeight: '1.45', fontWeight: '400' }],
+        'label': ['12px', { lineHeight: '1.35', fontWeight: '600', letterSpacing: '0.03em' }],
+        'label-sm': ['11px', { lineHeight: '1.35', fontWeight: '600', letterSpacing: '0.05em' }]
       },
       spacing: {
+        // Kami 4pt 基础单位节奏
         'container-padding': '32px',
         'window-padding': '24px',
         'sidebar-width': '260px',
@@ -103,10 +124,18 @@ export default {
         md: '16px',
         lg: '24px',
         xl: '40px',
+        '2xl': '60px',
+        '3xl': '120px',
         gutter: '16px',
         'stack-sm': '8px',
         'stack-md': '12px',
         'stack-lg': '24px'
+      },
+      boxShadow: {
+        // Kami 阴影三法：ring / whisper，不用硬投影
+        ring: '0 0 0 1px hsl(var(--ring-warm))',
+        whisper: '0 4px 24px rgba(0,0,0,0.05)',
+        'whisper-lg': '0 8px 32px rgba(0,0,0,0.06)'
       },
       backdropBlur: {
         sidebar: '20px'
