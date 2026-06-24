@@ -21,6 +21,10 @@ fn settings_path(app: &AppHandle) -> Result<PathBuf, String> {
     Ok(resolve_pi_dir(app)?.join("settings.json"))
 }
 
+fn models_path(app: &AppHandle) -> Result<PathBuf, String> {
+    Ok(resolve_pi_dir(app)?.join("models.json"))
+}
+
 /// Read a JSON file, returning the parsed Value. Returns the provided default
 /// if the file does not exist.
 async fn read_json_or_default(path: &PathBuf, default: Value) -> Result<Value, String> {
@@ -83,4 +87,16 @@ pub async fn config_get_settings(app: AppHandle) -> Result<Value, String> {
 pub async fn config_save_settings(app: AppHandle, settings: Value) -> Result<(), String> {
     let path = settings_path(&app)?;
     write_json_private(&path, &settings).await
+}
+
+#[tauri::command]
+pub async fn config_get_models(app: AppHandle) -> Result<Value, String> {
+    let path = models_path(&app)?;
+    read_json_or_default(&path, serde_json::json!({ "providers": {} })).await
+}
+
+#[tauri::command]
+pub async fn config_save_models(app: AppHandle, models: Value) -> Result<(), String> {
+    let path = models_path(&app)?;
+    write_json_private(&path, &models).await
 }

@@ -69,6 +69,16 @@ async fn pi_stop(state: State<'_, Arc<AppState>>) -> Result<(), String> {
     Ok(())
 }
 
+#[tauri::command]
+async fn pi_restart(
+    app: tauri::AppHandle,
+    state: State<'_, Arc<AppState>>,
+) -> Result<(), String> {
+    let mut sc = state.sidecar.lock().await;
+    sc.stop().await;
+    sc.start(app).await
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -104,10 +114,13 @@ pub fn run() {
             pi_ready,
             pi_send,
             pi_stop,
+            pi_restart,
             config::config_get_auth,
             config::config_save_auth,
             config::config_get_settings,
             config::config_save_settings,
+            config::config_get_models,
+            config::config_save_models,
             sessions::list_sessions,
         ])
         .run(tauri::generate_context!())

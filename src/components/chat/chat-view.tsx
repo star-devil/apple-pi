@@ -12,6 +12,7 @@ export function ChatView() {
   const error = useChatStore((s) => s.error);
   const addMessage = useChatStore((s) => s.addMessage);
   const setStreaming = useChatStore((s) => s.setStreaming);
+  const setError = useChatStore((s) => s.setError);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // Subscribe to the Pi event stream once.
@@ -23,7 +24,12 @@ export function ChatView() {
 
   const handleSend = (text: string) => {
     addMessage({ id: crypto.randomUUID(), role: 'user', text });
-    void piClient.prompt(text);
+    piClient
+      .prompt(text)
+      .then((r) => {
+        if (!r.success) setError(r.error ?? 'prompt 失败');
+      })
+      .catch((e) => setError(String(e)));
   };
 
   const handleAbort = () => {

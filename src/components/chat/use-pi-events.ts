@@ -42,6 +42,12 @@ export function usePiEvents() {
             case 'toolcall_start':
               if (ev.toolCall) addToolCall(id, ev.toolCall);
               break;
+            case 'error':
+              setError(String(ev.error ?? 'agent stream error'));
+              finalize(id);
+              assistantIdRef.current = null;
+              setStreaming(false);
+              break;
           }
           break;
         }

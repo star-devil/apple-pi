@@ -15,7 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useModelsStore } from '@/store/models';
 import { cn } from '@/lib/utils';
-import type { AuthConfig } from '@/lib/types';
+import type { AuthConfig, ModelsConfig } from '@/lib/types';
 
 export const Route = createFileRoute('/models')({
   component: ModelsPage,
@@ -27,6 +27,7 @@ function ModelsPage() {
     currentModelId,
     currentProvider,
     auth,
+    modelsConfig,
     loading,
     error,
     load,
@@ -59,6 +60,7 @@ function ModelsPage() {
 
           <ProviderCard
             auth={auth}
+            modelsConfig={modelsConfig}
             loading={loading}
             onSave={saveAuth}
           />
@@ -80,35 +82,55 @@ function ModelsPage() {
 
 interface ProviderCardProps {
   auth: AuthConfig;
+  modelsConfig: ModelsConfig;
   loading: boolean;
-  onSave: (auth: AuthConfig) => Promise<void>;
+  onSave: (auth: AuthConfig, modelsConfig?: ModelsConfig) => Promise<void>;
 }
 
-function ProviderCard({ auth, loading, onSave }: ProviderCardProps) {
-  const [draft, setDraft] = useState<AuthConfig>(auth);
+function ProviderCard({ auth, modelsConfig, loading, onSave }: ProviderCardProps) {
+  const [draftAuth, setDraftAuth] = useState<AuthConfig>(auth);
+  const [draftModels, setDraftModels] = useState<ModelsConfig>(modelsConfig);
   const [newProvider, setNewProvider] = useState('');
 
-  // Re-sync draft when the store finishes loading.
+  // Re-sync drafts when the store finishes loading.
   useEffect(() => {
-    setDraft(auth);
+    setDraftAuth(auth);
   }, [auth]);
+  useEffect(() => {
+    setDraftModels(modelsConfig);
+  }, [modelsConfig]);
 
-  const providers = Object.keys(draft);
+  const providers = Object.keys(draftAuth);
 
   const updateKey = (provider: string, key: string) =>
-    setDraft((d) => ({ ...d, [provider]: { ...d[provider], type: 'api_key', key } }));
+    setDraftAuth((d) => ({ ...d, [provider]: { ...d[provider], type: 'api_key', key } }));
 
-  const removeProvider = (provider: string) =>
-    setDraft((d) => {
+  const updateBaseUrl = (provider: string, baseUrl: string) =>
+    setDraftModels((d) => ({
+      ...d,
+      providers: {
+        ...d.providers,
+        [provider]: { ...d.providers[provider], baseUrl },
+      },
+    }));
+
+  const removeProvider = (provider: string) => {
+    setDraftAuth((d) => {
       const next = { ...d };
       delete next[provider];
       return next;
     });
+    setDraftModels((d) => {
+      const nextProviders = { ...d.providers };
+      delete nextProviders[provider];
+      return { ...d, providers: nextProviders };
+    });
+  };
 
   const addProvider = () => {
     const name = newProvider.trim();
-    if (!name || draft[name]) return;
-    setDraft((d) => ({ ...d, [name]: { type: 'api_key', key: '' } }));
+    if (!name || draftAuth[name]) return;
+    setDraftAuth((d) => ({ ...d, [name]: { type: 'api_key', key: '' } }));
     setNewProvider('');
   };
 
@@ -117,7 +139,7 @@ function ProviderCard({ auth, loading, onSave }: ProviderCardProps) {
       <CardHeader>
         <CardTitle>Provider 与 API 密钥</CardTitle>
         <CardDescription>
-          写入 auth.json(权限 0600)。支持字面量 key、`!command`、`$ENV` 语法。
+          密钥写入 auth.json(0600),Base URL 写入 models.json。支持 `!command`、`$ENV` 密钥语法。
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -128,7 +150,7 @@ function ProviderCard({ auth, loading, onSave }: ProviderCardProps) {
         )}
 
         {providers.map((p) => (
-          <div key={p} className="space-y-1.5">
+          <div key={p} className="space-y-2">
             <div className="flex items-center justify-between">
               <Label className="text-body-sm font-medium">{p}</Label>
               <Button
@@ -141,42 +163,63 @@ function ProviderCard({ auth, loading, onSave }: ProviderCardProps) {
                 <Trash2 className="h-3.5 w-3.5" />
               </Button>
             </div>
-            <Input
-              type="password"
-              value={draft[p]?.key ?? ''}
-              onChange={(e) => updateKey(p, e.target.value)}
-              placeholder="sk-... 或 !command 或 $ENV_VAR"
-              autoComplete="off"
-              spellCheck={false}
-            />
+            <div className="grid gap-2 sm:grid-cols-[1fr_1.4fr]">
+              <div className="space-y-1">
+                <Label className="text-xs text-muted-foreground">API Key</Label>
+                <Input
+                  type="password"
+                  value={draftAuth[p]?.key ?? ''}
+                  onChange={(e) => updateKey(p, e.target.value)}
+                  placeholder="sk-... 或 !command 或 $ENV_VAR"
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label className="text-xs text-muted-foreground">Base URL(可选)</Label>
+                <Input
+                  type="url"
+                  value={draftModels.providers[p]?.baseUrl ?? ''}
+                  onChange={(e) => updateBaseUrl(p, e.target.value)}
+                  placeholder="https://api.example.com/v1"
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+              </div>
+            </div>
           </div>
         ))}
 
-        <div className="flex items-end gap-2 pt-2">
-          <div className="flex-1 space-y-1.5">
-            <Label className="text-body-sm">新增 Provider</Label>
-            <Input
-              value={newProvider}
-              onChange={(e) => setNewProvider(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  addProvider();
-                }
-              }}
-              placeholder="provider 名称"
-              spellCheck={false}
-            />
+        <div className="space-y-2 border-t border-outline-variant/30 pt-4">
+          <Label className="text-body-sm">新增 Provider</Label>
+          <div className="flex items-end gap-2">
+            <div className="flex-1 space-y-1">
+              <Input
+                value={newProvider}
+                onChange={(e) => setNewProvider(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addProvider();
+                  }
+                }}
+                placeholder="provider 名称(如 deepseek、openai)"
+                spellCheck={false}
+              />
+            </div>
+            <Button variant="outline" size="sm" onClick={addProvider} disabled={!newProvider.trim()}>
+              <Plus className="mr-1 h-3.5 w-3.5" /> 添加
+            </Button>
           </div>
-          <Button variant="outline" size="sm" onClick={addProvider} disabled={!newProvider.trim()}>
-            <Plus className="mr-1 h-3.5 w-3.5" /> 添加
-          </Button>
+          <p className="text-xs text-muted-foreground">
+            添加后在上方填写该 provider 的 API Key 与 Base URL。
+          </p>
         </div>
 
         <div className="flex justify-end pt-2">
-          <Button onClick={() => onSave(draft)} disabled={loading}>
+          <Button onClick={() => onSave(draftAuth, draftModels)} disabled={loading}>
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            保存密钥
+            保存
           </Button>
         </div>
       </CardContent>

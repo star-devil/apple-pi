@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 import { listen, type UnlistenFn } from '@tauri-apps/api/event';
-import type { AuthConfig, RpcCommand, RpcEvent, RpcResponse, SettingsConfig } from './types';
+import type { AuthConfig, ModelsConfig, RpcCommand, RpcEvent, RpcResponse, SettingsConfig } from './types';
 
 // Singleton wrapper around the Tauri IPC bridge to the Pi sidecar.
 export const piClient = {
@@ -9,6 +9,12 @@ export const piClient = {
 
   /** Start the sidecar if not running. */
   start: () => invoke<void>('pi_start'),
+
+  /** Restart the sidecar (stop + start). Use after config changes that the sidecar only reads at startup (e.g. models.json providers). */
+  restart: () => invoke<void>('pi_restart'),
+
+  /** Stop the sidecar. */
+  stop: () => invoke<void>('pi_stop'),
 
   /** Send a raw RPC command and await its response (matched by id). */
   send: (cmd: RpcCommand) => invoke<RpcResponse>('pi_send', { cmd }),
@@ -55,4 +61,8 @@ export const piClient = {
   getSettings: (): Promise<SettingsConfig> => invoke<SettingsConfig>('config_get_settings'),
   saveSettings: (settings: SettingsConfig): Promise<void> =>
     invoke<void>('config_save_settings', { settings }),
+
+  getModelsConfig: (): Promise<ModelsConfig> => invoke<ModelsConfig>('config_get_models'),
+  saveModelsConfig: (models: ModelsConfig): Promise<void> =>
+    invoke<void>('config_save_models', { models }),
 };

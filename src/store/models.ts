@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { piClient } from '@/lib/pi-client';
-import type { AuthConfig, PiModel, SettingsConfig } from '@/lib/types';
+import type { AuthConfig, ModelsConfig, PiModel, SettingsConfig } from '@/lib/types';
 
 interface ModelsState {
   models: PiModel[];
@@ -8,13 +8,14 @@ interface ModelsState {
   currentProvider: string | null;
   auth: AuthConfig;
   settings: SettingsConfig;
+  modelsConfig: ModelsConfig;
   loading: boolean;
   error: string | null;
 
   // Load everything needed for the models page in one shot.
   load: () => Promise<void>;
-  // Persist auth.json and reload available models (new provider/key may unlock models).
-  saveAuth: (auth: AuthConfig) => Promise<void>;
+  // Persist auth.json and models.json (baseUrl), then reload available models.
+  saveAuth: (auth: AuthConfig, modelsConfig?: ModelsConfig) => Promise<void>;
   // Persist settings.json and hot-swap the active model via RPC.
   saveSettingsAndSwitch: (settings: SettingsConfig) => Promise<void>;
   // Switch the active model at runtime without touching settings.json.
@@ -27,15 +28,17 @@ export const useModelsStore = create<ModelsState>((set, get) => ({
   currentProvider: null,
   auth: {},
   settings: {},
+  modelsConfig: { providers: {} },
   loading: false,
   error: null,
 
   load: async () => {
     set({ loading: true, error: null });
     try {
-      const [auth, settings, stateResp, modelsResp] = await Promise.all([
+      const [auth, settings, modelsConfig, stateResp, modelsResp] = await Promise.all([
         piClient.getAuth(),
         piClient.getSettings(),
+        piClient.getModelsConfig(),
         piClient.getState(),
         piClient.getAvailableModels(),
       ]);
@@ -59,6 +62,7 @@ export const useModelsStore = create<ModelsState>((set, get) => ({
       set({
         auth,
         settings,
+        modelsConfig,
         models,
         currentModelId,
         currentProvider,
@@ -69,18 +73,26 @@ export const useModelsStore = create<ModelsState>((set, get) => ({
     }
   },
 
-  saveAuth: async (auth) => {
+  saveAuth: async (auth, modelsConfig) => {
     set({ loading: true, error: null });
     try {
       await piClient.saveAuth(auth);
       set({ auth });
-      // A new provider/key may unlock additional models; refresh the list.
+      // Persist baseUrl config to models.json if provided.
+      if (modelsConfig) {
+        await piClient.saveModelsConfig(modelsConfig);
+        set({ modelsConfig });
+      }
+      // The sidecar reads models.json + auth.json only at startup, so a new
+      // provider/baseUrl won't be visible until we restart it.
+      await piClient.restart();
+      // After restart, refresh the available models list.
       const resp = await piClient.getAvailableModels();
       if (resp.success && resp.data) {
         const data = resp.data as { models?: PiModel[] };
         set({ models: data.models ?? [], loading: false });
       } else {
-        set({ loading: false });
+        set({ models: [], loading: false, error: resp.error ?? '无法获取模型列表' });
       }
     } catch (e) {
       set({ loading: false, error: String(e) });

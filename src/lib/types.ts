@@ -137,6 +137,21 @@ export interface AuthEntry {
 }
 export type AuthConfig = Record<string, AuthEntry>;
 
+// models.json: custom provider configurations (baseUrl, headers, models, ...)
+export interface ProviderConfig {
+  name?: string;
+  baseUrl?: string;
+  apiKey?: string;
+  api?: string;
+  headers?: Record<string, string>;
+  models?: unknown[];
+  modelOverrides?: Record<string, unknown>;
+  [key: string]: unknown;
+}
+export interface ModelsConfig {
+  providers: Record<string, ProviderConfig>;
+}
+
 export interface SettingsConfig {
   defaultProvider?: string | null;
   defaultModel?: string | null;
