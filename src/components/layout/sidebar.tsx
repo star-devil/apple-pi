@@ -77,16 +77,22 @@ export function Sidebar() {
               key={item.to}
               to={item.to}
               className={cn(
-                'group relative flex items-center gap-3 rounded-lg px-3 py-2 text-body transition-colors',
+                'group relative flex items-center gap-3 rounded-lg px-3 py-2 text-body transition-all duration-150',
                 isActive
-                  ? 'bg-warm-sand/70 font-medium text-on-surface'
-                  : 'text-stone hover:bg-warm-sand/40 hover:text-on-surface'
+                  ? 'bg-[hsl(var(--ink-blue)/0.08)] font-medium text-ink-blue'
+                  : 'text-stone hover:bg-[hsl(var(--ink-blue)/0.05)] hover:text-on-surface active:bg-[hsl(var(--ink-blue)/0.08)]'
               )}
             >
               {isActive && (
-                <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r-full bg-ink-blue" />
+                <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-ink-blue" />
               )}
-              <Icon className="h-4 w-4 shrink-0" strokeWidth={2} />
+              <Icon
+                className={cn(
+                  'h-4 w-4 shrink-0 transition-colors',
+                  isActive ? 'text-ink-blue' : 'text-stone group-hover:text-on-surface'
+                )}
+                strokeWidth={2}
+              />
               <span>{item.label}</span>
             </Link>
           );
@@ -105,7 +111,7 @@ export function Sidebar() {
           {recentConversations.map((conv) => (
             <button
               key={conv}
-              className="flex items-center rounded-lg px-3 py-1.5 text-body text-stone transition-colors hover:bg-warm-sand/40 hover:text-on-surface"
+              className="flex items-center rounded-lg px-3 py-1.5 text-body text-stone transition-all duration-150 hover:bg-[hsl(var(--ink-blue)/0.05)] hover:text-on-surface active:bg-[hsl(var(--ink-blue)/0.08)]"
             >
               <span className="truncate">{conv}</span>
             </button>

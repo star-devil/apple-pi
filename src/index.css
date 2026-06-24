@@ -4,160 +4,173 @@
 
 @layer base {
   :root {
-    /* Kami 设计系统 · 亮色模式 */
+    /* Kami 设计系统 · 亮色模式（增强功能操作对比） */
     /* 暖米纸底，油墨蓝点缀，serif 承担层级 */
-    --background: 53 29% 95%;
-    --foreground: 60 3% 8%;
+    --background: 53 29% 94%;
+    --foreground: 60 6% 6%;
 
-    /* 画布层 · Canvas */
+    /* 画布层 · Canvas — 增大层级间深浅差异 */
     --surface: 48 33% 97%;
-    --surface-dim: 50 21% 89%;
-    --surface-bright: 48 33% 97%;
-    --surface-container-lowest: 48 33% 99%;
-    --surface-container-low: 50 21% 92%;
-    --surface-container: 50 21% 89%;
-    --surface-container-high: 50 18% 85%;
-    --surface-container-highest: 50 15% 80%;
+    --surface-dim: 50 21% 87%;
+    --surface-bright: 48 35% 98%;
+    --surface-container-lowest: 48 35% 99%;
+    --surface-container-low: 50 22% 93%;
+    --surface-container: 50 20% 90%;
+    --surface-container-high: 50 16% 84%;
+    --surface-container-highest: 50 12% 76%;
     --surface-tint: 215 55% 24%;
-    --surface-variant: 50 15% 80%;
+    --surface-variant: 50 12% 76%;
 
-    --on-surface: 60 3% 8%;
-    --on-surface-variant: 43 5% 30%;
+    --on-surface: 60 6% 6%;
+    --on-surface-variant: 43 8% 24%;
 
-    --card: 48 33% 97%;
-    --card-foreground: 60 3% 8%;
+    --card: 48 35% 98%;
+    --card-foreground: 60 6% 6%;
 
-    --popover: 48 33% 97%;
-    --popover-foreground: 60 3% 8%;
+    --popover: 48 35% 98%;
+    --popover-foreground: 60 6% 6%;
 
-    /* 主调 · Brand - 油墨蓝唯一强调色 */
-    --primary: 215 55% 24%;
+    /* 主调 · Brand - 油墨蓝，增强饱和度突出操作重点 */
+    --primary: 215 58% 22%;
     --primary-foreground: 48 33% 97%;
-    --primary-container: 211 51% 36%;
+    --primary-hover: 215 60% 18%;
+    --primary-container: 211 55% 34%;
     --on-primary-container: 48 33% 99%;
 
-    --secondary: 51 3% 41%;
+    --secondary: 51 5% 38%;
     --secondary-foreground: 48 33% 97%;
-    --secondary-container: 50 21% 89%;
-    --on-secondary-container: 60 3% 23%;
+    --secondary-container: 50 20% 86%;
+    --on-secondary-container: 60 4% 20%;
 
-    --tertiary: 43 5% 30%;
+    --tertiary: 43 8% 28%;
     --tertiary-foreground: 48 33% 97%;
-    --tertiary-container: 51 3% 41%;
-    --on-tertiary-container: 50 21% 92%;
+    --tertiary-container: 51 5% 38%;
+    --on-tertiary-container: 50 20% 90%;
 
-    --muted: 50 21% 92%;
-    --muted-foreground: 51 3% 41%;
+    --muted: 50 18% 88%;
+    --muted-foreground: 51 5% 36%;
 
-    --accent: 212 46% 93%;
-    --accent-foreground: 215 55% 24%;
+    --accent: 212 50% 90%;
+    --accent-foreground: 215 58% 22%;
 
-    --destructive: 0 56% 45%;
+    --destructive: 0 64% 42%;
     --destructive-foreground: 48 33% 97%;
-    --error-container: 0 40% 92%;
-    --on-error-container: 0 60% 25%;
+    --error-container: 0 45% 90%;
+    --on-error-container: 0 65% 22%;
 
-    --border: 50 18% 85%;
-    --input: 50 18% 85%;
-    --ring: 215 55% 24%;
+    --border: 50 14% 80%;
+    --input: 50 14% 80%;
+    --ring: 215 58% 22%;
 
-    --outline: 51 3% 41%;
-    --outline-variant: 50 18% 85%;
+    --outline: 51 5% 38%;
+    --outline-variant: 50 14% 80%;
 
-    --inverse-surface: 60 2% 18%;
+    --inverse-surface: 60 4% 16%;
     --inverse-on-surface: 48 33% 95%;
-    --inverse-primary: 211 51% 36%;
+    --inverse-primary: 211 55% 40%;
 
     /* Kami 专用变量 */
-    --parchment: 53 29% 95%;
-    --ivory: 48 33% 97%;
-    --warm-sand: 50 21% 89%;
-    --ink-blue: 215 55% 24%;
-    --olive: 43 5% 30%;
-    --stone: 51 3% 41%;
-    --ring-warm: 50 21% 80%;
+    --parchment: 53 29% 94%;
+    --ivory: 48 35% 98%;
+    --warm-sand: 50 20% 86%;
+    --ink-blue: 215 58% 22%;
+    --ink-blue-hover: 215 60% 18%;
+    --olive: 43 8% 28%;
+    --stone: 51 5% 38%;
+    --ring-warm: 50 14% 76%;
 
     /* Tag 实色（替代 rgba，避免双层矩形） */
-    --tag-tint-1: 213 36% 95%;
-    --tag-tint-2: 212 46% 93%;
-    --tag-tint-3: 211 36% 86%;
+    --tag-tint-1: 213 40% 93%;
+    --tag-tint-2: 212 50% 90%;
+    --tag-tint-3: 211 42% 83%;
+
+    /* 功能交互态 */
+    --hover-overlay: 215 58% 22%; /* 油墨蓝 6% 覆盖 */
+    --active-overlay: 215 58% 22%; /* 油墨蓝 10% 覆盖 */
+    --focus-glow: 215 58% 22%; /* 焦点环颜色 */
 
     --radius: 0.375rem;
   }
 
   .dark {
-    /* Kami 设计系统 · 暗色模式 */
-    --background: 60 3% 8%;
-    --foreground: 53 29% 95%;
+    /* Kami 设计系统 · 暗色模式（增强对比） */
+    --background: 60 4% 6%;
+    --foreground: 53 30% 94%;
 
-    --surface: 40 5% 11%;
-    --surface-dim: 60 3% 8%;
-    --surface-bright: 40 5% 14%;
-    --surface-container-lowest: 60 3% 6%;
-    --surface-container-low: 40 5% 10%;
-    --surface-container: 40 4% 14%;
-    --surface-container-high: 40 4% 18%;
-    --surface-container-highest: 40 4% 22%;
-    --surface-tint: 211 51% 36%;
-    --surface-variant: 40 4% 22%;
+    --surface: 40 6% 10%;
+    --surface-dim: 60 4% 6%;
+    --surface-bright: 40 6% 15%;
+    --surface-container-lowest: 60 4% 4%;
+    --surface-container-low: 40 6% 9%;
+    --surface-container: 40 5% 13%;
+    --surface-container-high: 40 5% 18%;
+    --surface-container-highest: 40 5% 24%;
+    --surface-tint: 211 55% 40%;
+    --surface-variant: 40 5% 24%;
 
-    --on-surface: 53 29% 95%;
-    --on-surface-variant: 48 5% 64%;
+    --on-surface: 53 30% 94%;
+    --on-surface-variant: 48 8% 70%;
 
-    --card: 40 4% 14%;
-    --card-foreground: 53 29% 95%;
+    --card: 40 5% 13%;
+    --card-foreground: 53 30% 94%;
 
-    --popover: 40 4% 14%;
-    --popover-foreground: 53 29% 95%;
+    --popover: 40 5% 13%;
+    --popover-foreground: 53 30% 94%;
 
-    --primary: 211 51% 36%;
+    --primary: 211 55% 40%;
     --primary-foreground: 48 33% 97%;
-    --primary-container: 215 55% 24%;
-    --on-primary-container: 212 46% 93%;
+    --primary-hover: 211 58% 46%;
+    --primary-container: 215 58% 22%;
+    --on-primary-container: 212 50% 92%;
 
-    --secondary: 49 12% 83%;
-    --secondary-foreground: 60 3% 8%;
-    --secondary-container: 60 3% 23%;
-    --on-secondary-container: 49 12% 83%;
+    --secondary: 49 14% 82%;
+    --secondary-foreground: 60 4% 6%;
+    --secondary-container: 60 4% 20%;
+    --on-secondary-container: 49 14% 82%;
 
-    --tertiary: 48 5% 64%;
-    --tertiary-foreground: 40 5% 11%;
-    --tertiary-container: 51 3% 41%;
-    --on-tertiary-container: 48 5% 90%;
+    --tertiary: 48 8% 68%;
+    --tertiary-foreground: 40 6% 10%;
+    --tertiary-container: 51 5% 38%;
+    --on-tertiary-container: 48 8% 88%;
 
-    --muted: 40 4% 22%;
-    --muted-foreground: 48 5% 64%;
+    --muted: 40 5% 20%;
+    --muted-foreground: 48 8% 68%;
 
-    --accent: 216 28% 27%;
-    --accent-foreground: 212 46% 93%;
+    --accent: 216 32% 24%;
+    --accent-foreground: 212 50% 90%;
 
-    --destructive: 0 60% 62%;
-    --destructive-foreground: 60 3% 8%;
-    --error-container: 0 50% 25%;
-    --on-error-container: 0 40% 92%;
+    --destructive: 0 64% 58%;
+    --destructive-foreground: 60 4% 6%;
+    --error-container: 0 55% 22%;
+    --on-error-container: 0 45% 90%;
 
-    --border: 40 4% 22%;
-    --input: 40 4% 22%;
-    --ring: 211 51% 36%;
+    --border: 40 5% 24%;
+    --input: 40 5% 24%;
+    --ring: 211 55% 40%;
 
-    --outline: 53 4% 53%;
-    --outline-variant: 40 4% 22%;
+    --outline: 53 5% 50%;
+    --outline-variant: 40 5% 24%;
 
-    --inverse-surface: 53 29% 95%;
-    --inverse-on-surface: 60 3% 8%;
-    --inverse-primary: 215 55% 24%;
+    --inverse-surface: 53 30% 94%;
+    --inverse-on-surface: 60 4% 6%;
+    --inverse-primary: 215 58% 22%;
 
-    --parchment: 60 3% 8%;
-    --ivory: 40 4% 14%;
-    --warm-sand: 60 3% 23%;
-    --ink-blue: 211 51% 36%;
-    --olive: 48 5% 64%;
-    --stone: 53 4% 53%;
-    --ring-warm: 40 4% 30%;
+    --parchment: 60 4% 6%;
+    --ivory: 40 5% 13%;
+    --warm-sand: 60 4% 20%;
+    --ink-blue: 211 55% 40%;
+    --ink-blue-hover: 211 58% 46%;
+    --olive: 48 8% 68%;
+    --stone: 53 5% 50%;
+    --ring-warm: 40 5% 32%;
 
-    --tag-tint-1: 215 21% 21%;
-    --tag-tint-2: 216 28% 27%;
-    --tag-tint-3: 216 30% 33%;
+    --tag-tint-1: 215 24% 18%;
+    --tag-tint-2: 216 32% 24%;
+    --tag-tint-3: 216 34% 30%;
+
+    --hover-overlay: 211 55% 40%;
+    --active-overlay: 211 55% 40%;
+    --focus-glow: 211 55% 40%;
   }
 }
 
@@ -202,8 +215,18 @@
     box-shadow: 0 0 0 1px hsl(var(--ring-warm));
   }
 
+  .shadow-ring-soft {
+    box-shadow: 0 0 0 1px hsl(var(--ring-warm) / 0.42);
+  }
+
   .shadow-whisper {
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  }
+
+  .shadow-whisper-warm {
+    box-shadow:
+      0 0 0 1px hsl(var(--ring-warm) / 0.3),
+      0 10px 28px rgba(61, 61, 58, 0.045);
   }
 
   /* 玻璃拟态效果 */
@@ -238,5 +261,60 @@
     position: absolute;
     left: -1.25rem;
     color: hsl(var(--olive));
+  }
+}
+
+@layer components {
+  /* 功能交互态 - 偏向操作而非阅读 */
+
+  /* 通用 hover 提升层 */
+  .interactive {
+    @apply transition-all duration-150 ease-out;
+  }
+  .interactive:hover {
+    transform: translateY(-1px);
+  }
+  .interactive:active {
+    transform: translateY(0px);
+  }
+
+  /* hover 油墨蓝覆盖（6%） */
+  .hover-lift {
+    @apply transition-colors duration-150;
+  }
+  .hover-lift:hover {
+    background-color: hsl(var(--hover-overlay) / 0.06);
+  }
+  .hover-lift:active {
+    background-color: hsl(var(--active-overlay) / 0.1);
+  }
+
+  /* 焦点环 - 增强操作反馈 */
+  .focus-glow {
+    @apply transition-shadow duration-150;
+  }
+  .focus-glow:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--focus-glow) / 0.5);
+  }
+
+  /* 卡片交互态 - hover 提升加阴影 */
+  .card-interactive {
+    @apply transition-all duration-200 ease-out;
+  }
+  .card-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px hsl(var(--ink-blue) / 0.15), 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  .card-interactive:active {
+    transform: translateY(0px);
+  }
+
+  /* 按钮按下反馈 */
+  .btn-press {
+    @apply transition-transform duration-100;
+  }
+  .btn-press:active {
+    transform: scale(0.97);
   }
 }

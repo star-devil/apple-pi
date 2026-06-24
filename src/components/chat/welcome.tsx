@@ -40,7 +40,7 @@ export function Welcome({ onQuickAction }: WelcomeProps) {
             <button
               key={action.id}
               onClick={() => onQuickAction?.(action.id)}
-              className="group flex flex-col gap-2 rounded-2xl border border-outline-variant/40 bg-ivory p-4 text-left transition-all hover:border-primary/40 hover:shadow-whisper"
+              className="group flex flex-col gap-2 rounded-2xl border border-outline-variant/40 bg-ivory p-4 text-left transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-ink-blue/30 hover:shadow-whisper active:translate-y-0 active:shadow-ring"
             >
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-secondary-container/60 transition-colors group-hover:bg-primary-container/60">
                 <Icon className="h-4 w-4 text-on-secondary-container group-hover:text-on-primary-container" strokeWidth={2} />

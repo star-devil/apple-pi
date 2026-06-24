@@ -39,8 +39,7 @@ export function InputBar() {
         </div>
       )}
 
-        {/* 输入框容器 */}
-      <div className="flex items-end gap-2 rounded-xl border border-outline-variant/50 bg-ivory p-2 shadow-ring transition-colors focus-within:border-ink-blue/50">
+      <div className="flex items-end gap-2 rounded-xl border border-outline-variant/50 bg-ivory p-2 shadow-ring transition-all duration-150 focus-within:border-ink-blue/50 focus-within:shadow-[0_0_0_1px_hsl(var(--ink-blue)/0.2),0_4px_24px_rgba(0,0,0,0.06)]">
         {/* 附件按钮 */}
         <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0" title="添加附件">
           <Paperclip className="h-4 w-4" strokeWidth={2} />
