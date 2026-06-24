@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
 import { listen, type UnlistenFn } from '@tauri-apps/api/event';
-import type { RpcCommand, RpcEvent, RpcResponse } from './types';
+import type { AuthConfig, RpcCommand, RpcEvent, RpcResponse, SettingsConfig } from './types';
 
 // Singleton wrapper around the Tauri IPC bridge to the Pi sidecar.
 export const piClient = {
@@ -35,4 +35,12 @@ export const piClient = {
   /** Subscribe to the Pi event stream. Returns an unsubscribe function. */
   onEvent: (handler: (e: RpcEvent) => void): Promise<UnlistenFn> =>
     listen<RpcEvent>('pi:event', (e) => handler(e.payload)),
+
+  // ---------- Config file access (direct file IO in Rust) ----------
+
+  getAuth: (): Promise<AuthConfig> => invoke<AuthConfig>('config_get_auth'),
+  saveAuth: (auth: AuthConfig): Promise<void> => invoke<void>('config_save_auth', { auth }),
+  getSettings: (): Promise<SettingsConfig> => invoke<SettingsConfig>('config_get_settings'),
+  saveSettings: (settings: SettingsConfig): Promise<void> =>
+    invoke<void>('config_save_settings', { settings }),
 };

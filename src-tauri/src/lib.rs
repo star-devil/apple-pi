@@ -1,4 +1,5 @@
 mod sidecar;
+mod config;
 
 use std::sync::Arc;
 use serde_json::Value;
@@ -97,7 +98,16 @@ pub fn run() {
                 });
             }
         })
-        .invoke_handler(tauri::generate_handler![pi_start, pi_ready, pi_send, pi_stop])
+        .invoke_handler(tauri::generate_handler![
+            pi_start,
+            pi_ready,
+            pi_send,
+            pi_stop,
+            config::config_get_auth,
+            config::config_save_auth,
+            config::config_get_settings,
+            config::config_save_settings,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

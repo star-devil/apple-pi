@@ -3,9 +3,11 @@ use std::path::PathBuf;
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::process::{Child, ChildStdin};
 use tokio::sync::{Mutex, oneshot};
-use tauri::{AppHandle, Emitter, Manager};
+use tauri::{AppHandle, Emitter};
 use std::collections::HashMap;
 use serde_json::Value;
+
+use crate::config::resolve_pi_dir;
 
 /// Manages the Pi sidecar process: spawns `node pi-cli.js --mode rpc`,
 /// bridges stdin/stdout JSONL to the frontend via Tauri events,
@@ -283,15 +285,4 @@ fn resolve_pi_entry() -> Result<PathBuf, String> {
         "pi-coding-agent entry not found. Run `pnpm install` in sidecar/. Tried: {:?}",
         candidates
     ))
-}
-
-/// Resolve the isolated Pi data directory under the app data dir.
-/// PI_CODING_AGENT_DIR points at the `agent/` dir (default ~/.pi/agent),
-/// so we return <app_data>/apple-pi/.pi/agent.
-fn resolve_pi_dir(app: &AppHandle) -> Result<PathBuf, String> {
-    let data_dir = app
-        .path()
-        .app_data_dir()
-        .map_err(|e| format!("app_data_dir: {e}"))?;
-    Ok(data_dir.join("apple-pi").join(".pi").join("agent"))
 }

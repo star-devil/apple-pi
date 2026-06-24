@@ -105,3 +105,41 @@ export interface ChatMessage {
   toolCalls?: ToolCall[];
   streaming?: boolean;
 }
+
+// ---------- Model registry (from get_available_models) ----------
+
+export interface ModelCost {
+  input: number;
+  output: number;
+  cacheRead?: number;
+  cacheWrite?: number;
+}
+
+export interface PiModel {
+  id: string;
+  name: string;
+  provider: string;
+  api?: string;
+  baseUrl?: string;
+  reasoning?: boolean;
+  contextWindow?: number;
+  maxTokens?: number;
+  cost?: ModelCost;
+  [key: string]: unknown;
+}
+
+// ---------- Pi config files (auth.json / settings.json) ----------
+
+// auth.json: provider -> credential entry
+export interface AuthEntry {
+  type?: string; // "api_key" | "command" | "env"
+  key?: string; // literal key, or command, or env var name
+}
+export type AuthConfig = Record<string, AuthEntry>;
+
+export interface SettingsConfig {
+  defaultProvider?: string | null;
+  defaultModel?: string | null;
+  defaultThinkingLevel?: string;
+  [key: string]: unknown;
+}
