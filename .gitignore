@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Tauri build cache
+src-tauri/target/
+
+# Bundled node binary for Pi sidecar (fetched via `pnpm fetch:node`)
+src-tauri/binaries/
+
+# Pi sidecar build output
+sidecar/dist/
+sidecar/node_modules/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
