@@ -1,5 +1,6 @@
 mod sidecar;
 mod config;
+mod sessions;
 
 use std::sync::Arc;
 use serde_json::Value;
@@ -107,6 +108,7 @@ pub fn run() {
             config::config_save_auth,
             config::config_get_settings,
             config::config_save_settings,
+            sessions::list_sessions,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

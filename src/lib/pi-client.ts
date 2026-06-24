@@ -32,6 +32,18 @@ export const piClient = {
   getState: (): Promise<RpcResponse> =>
     piClient.send({ type: 'get_state', id: crypto.randomUUID() }),
 
+  /** Load all messages of the current session. */
+  getMessages: (): Promise<RpcResponse> =>
+    piClient.send({ type: 'get_messages', id: crypto.randomUUID() }),
+
+  /** Switch to an existing session by its file path. */
+  switchSession: (sessionPath: string): Promise<RpcResponse> =>
+    piClient.send({ type: 'switch_session', sessionPath, id: crypto.randomUUID() }),
+
+  /** Start a new session. */
+  newSession: (): Promise<RpcResponse> =>
+    piClient.send({ type: 'new_session', id: crypto.randomUUID() }),
+
   /** Subscribe to the Pi event stream. Returns an unsubscribe function. */
   onEvent: (handler: (e: RpcEvent) => void): Promise<UnlistenFn> =>
     listen<RpcEvent>('pi:event', (e) => handler(e.payload)),

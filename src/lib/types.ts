@@ -80,20 +80,20 @@ export interface ToolCall {
 
 // ---------- Pi message model ----------
 
-export type PiMessageRole = 'user' | 'assistant' | 'toolResult';
+export type PiMessageRole = 'user' | 'assistant' | 'toolResult' | 'system';
 
 export interface PiMessage {
-  id: string;
+  id?: string;
   role: PiMessageRole;
-  parentId?: string;
   content: MessageContent[];
   [key: string]: unknown;
 }
 
 export type MessageContent =
   | { type: 'text'; text: string }
-  | { type: 'thinking'; text: string }
-  | { type: 'toolCall'; toolCall: ToolCall };
+  | { type: 'thinking'; thinking: string }
+  | { type: 'toolCall'; id: string; name: string; arguments: Record<string, unknown> }
+  | { type: 'toolResult'; toolCallId?: string; content?: unknown };
 
 // ---------- apple-pi UI model (derived from RPC events) ----------
 
@@ -142,4 +142,14 @@ export interface SettingsConfig {
   defaultModel?: string | null;
   defaultThinkingLevel?: string;
   [key: string]: unknown;
+}
+
+// ---------- Session history (from list_sessions Tauri command) ----------
+
+export interface SessionEntry {
+  id: string;
+  timestamp: string;
+  cwd?: string | null;
+  path: string;
+  title: string;
 }

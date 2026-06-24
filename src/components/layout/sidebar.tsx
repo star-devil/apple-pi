@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Link, useRouterState } from '@tanstack/react-router';
 import {
   Plus,
@@ -13,6 +14,8 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { useSessionsStore } from '@/store/sessions';
 import { cn } from '@/lib/utils';
 
 interface NavItem {
@@ -29,14 +32,17 @@ const navItems: NavItem[] = [
   { label: '快捷键', icon: Keyboard, to: '/shortcuts' }
 ];
 
-const recentConversations = [
-  '项目讨论记录',
-  'Rust 后端调试',
-  '架构方案设计'
-];
-
 export function Sidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const sessions = useSessionsStore((s) => s.sessions);
+  const currentSessionId = useSessionsStore((s) => s.currentSessionId);
+  const list = useSessionsStore((s) => s.list);
+  const open = useSessionsStore((s) => s.open);
+  const create = useSessionsStore((s) => s.create);
+
+  useEffect(() => {
+    list();
+  }, [list]);
 
   return (
     <aside className="flex h-full w-sidebar-width shrink-0 flex-col border-r border-outline-variant/40 bg-ivory/70 glass">
@@ -61,7 +67,12 @@ export function Sidebar() {
 
       {/* 新建对话按钮 */}
       <div className="px-window-padding pb-md">
-        <Button variant="default" className="w-full justify-start gap-2" size="default">
+        <Button
+          variant="default"
+          className="w-full justify-start gap-2"
+          size="default"
+          onClick={() => void create()}
+        >
           <Plus className="h-4 w-4" />
           新建对话
         </Button>
@@ -107,16 +118,29 @@ export function Sidebar() {
             历史记录
           </span>
         </div>
-        <div className="flex flex-col gap-0.5">
-          {recentConversations.map((conv) => (
-            <button
-              key={conv}
-              className="flex items-center rounded-lg px-3 py-1.5 text-body text-stone transition-all duration-150 hover:bg-[hsl(var(--ink-blue)/0.05)] hover:text-on-surface active:bg-[hsl(var(--ink-blue)/0.08)]"
-            >
-              <span className="truncate">{conv}</span>
-            </button>
-          ))}
-        </div>
+        <ScrollArea className="h-full pb-md">
+          <div className="flex flex-col gap-0.5">
+            {sessions.length === 0 && (
+              <p className="px-3 py-2 text-label-sm text-muted-foreground">暂无历史会话</p>
+            )}
+            {sessions.map((conv) => {
+              const active = conv.id === currentSessionId;
+              return (
+                <button
+                  key={conv.id}
+                  onClick={() => void open(conv)}
+                  className={cn(
+                    'flex items-center rounded-lg px-3 py-1.5 text-body text-stone transition-colors hover:bg-warm-sand/40 hover:text-on-surface',
+                    active && 'bg-warm-sand/70 font-medium text-on-surface'
+                  )}
+                  title={conv.cwd ?? conv.path}
+                >
+                  <span className="truncate">{conv.title}</span>
+                </button>
+              );
+            })}
+          </div>
+        </ScrollArea>
       </div>
 
       <Separator className="my-0" />
