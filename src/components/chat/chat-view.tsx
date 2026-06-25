@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { MessageBubble } from './message-bubble';
 import { Composer } from './composer';
+import { ModelSelector } from './model-selector';
 import { usePiEvents } from './use-pi-events';
 import { useChatStore } from '@/store/chat';
 import { piClient } from '@/lib/pi-client';
@@ -39,6 +40,9 @@ export function ChatView() {
 
   return (
     <div className="flex h-full flex-col">
+      <div className="flex h-12 shrink-0 items-center border-b border-outline-variant/30 px-window-padding">
+        <ModelSelector />
+      </div>
       <ScrollArea className="flex-1">
         <div className="mx-auto flex max-w-3xl flex-col gap-4 p-window-padding">
           {messages.length === 0 && (

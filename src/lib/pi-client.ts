@@ -2,6 +2,11 @@ import { invoke } from '@tauri-apps/api/core';
 import { listen, type UnlistenFn } from '@tauri-apps/api/event';
 import type { AuthConfig, ModelsConfig, RpcCommand, RpcEvent, RpcResponse, SettingsConfig } from './types';
 
+export interface RemoteModel {
+  id: string;
+  name: string;
+}
+
 // Singleton wrapper around the Tauri IPC bridge to the Pi sidecar.
 export const piClient = {
   /** Ensure the sidecar is started; returns true if healthy. */
@@ -65,4 +70,9 @@ export const piClient = {
   getModelsConfig: (): Promise<ModelsConfig> => invoke<ModelsConfig>('config_get_models'),
   saveModelsConfig: (models: ModelsConfig): Promise<void> =>
     invoke<void>('config_save_models', { models }),
+
+  // ---------- Remote model list fetching (Rust HTTP) ----------
+
+  fetchModels: (baseUrl: string, apiKey: string | null, apiSpec: string): Promise<RemoteModel[]> =>
+    invoke<RemoteModel[]>('fetch_models', { baseUrl, apiKey, apiSpec }),
 };

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Sidebar } from './sidebar';
 import { TopBar } from './top-bar';
+import { Toaster } from '@/components/ui/sonner';
 
 interface AppLayoutProps {
   breadcrumb?: string;
@@ -13,8 +14,9 @@ export function AppLayout({ breadcrumb, children }: AppLayoutProps) {
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <TopBar breadcrumb={breadcrumb} />
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-hidden">{children}</main>
       </div>
+      <Toaster position="bottom-right" richColors />
     </div>
   );
 }

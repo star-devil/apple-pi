@@ -128,6 +128,32 @@ export interface PiModel {
   [key: string]: unknown;
 }
 
+// API 规范标识符(对应 Pi sidecar 的 KnownApi)
+export type ApiSpec =
+  | 'openai-completions'
+  | 'openai-responses'
+  | 'anthropic-messages'
+  | 'google-generative-ai'
+  | 'google-vertex'
+  | 'mistral-conversations'
+  | 'bedrock-converse-stream'
+  | (string & {});
+
+// models.json 中自定义模型定义
+export interface CustomModelDef {
+  id: string;
+  name?: string;
+  api?: ApiSpec;
+  baseUrl?: string;
+  reasoning?: boolean;
+  input?: ('text' | 'image')[];
+  contextWindow?: number;
+  maxTokens?: number;
+  cost?: { input: number; output: number; cacheRead?: number; cacheWrite?: number };
+  headers?: Record<string, string>;
+  [key: string]: unknown;
+}
+
 // ---------- Pi config files (auth.json / settings.json) ----------
 
 // auth.json: provider -> credential entry
@@ -142,9 +168,9 @@ export interface ProviderConfig {
   name?: string;
   baseUrl?: string;
   apiKey?: string;
-  api?: string;
+  api?: ApiSpec;
   headers?: Record<string, string>;
-  models?: unknown[];
+  models?: CustomModelDef[];
   modelOverrides?: Record<string, unknown>;
   [key: string]: unknown;
 }

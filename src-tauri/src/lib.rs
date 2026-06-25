@@ -1,6 +1,7 @@
 mod sidecar;
 mod config;
 mod sessions;
+mod models;
 
 use std::sync::Arc;
 use serde_json::Value;
@@ -122,6 +123,7 @@ pub fn run() {
             config::config_get_models,
             config::config_save_models,
             sessions::list_sessions,
+            models::fetch_models,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
